@@ -34,8 +34,8 @@ class polygon():
     def update_nodes(self, new_nodes):
 
         self.nodes = new_nodes
-        self.com = calculate_com(self.nodes)
-        self.t_matrix = self.t_matrix
+        self.com = self.calculate_com(self.nodes)
+        self.t_matrix = self.get_transformation_matrix()
 
 
     def get_scaled_nodes(self, scaling, plot = False):
@@ -66,10 +66,11 @@ class polygon():
             self.ax.plot([new_nodes[-1][0], new_nodes[0][0]], [new_nodes[-1][1], new_nodes[0][1]], 'bo--')
         return new_nodes
 
-    def plot_polygon(self, close_polygon = False):
+    def plot_polygon(self, close_polygon = True):
 
         self.line = self.ax.plot(self.nodes[...,0], self.nodes[...,1], 'bo-')
-        self.line_end = self.ax.plot([self.nodes[-1][0], self.nodes[0][0]], [self.nodes[-1][1], self.nodes[0][1]], 'bo-')
+        if close_polygon:
+            self.line_end = self.ax.plot([self.nodes[-1][0], self.nodes[0][0]], [self.nodes[-1][1], self.nodes[0][1]], 'bo-')
         self.com_line = self.ax.plot(self.com[0], self.com[1], 'ro-')
 
     def plot_com_rays(self):
@@ -86,4 +87,5 @@ class polygon():
         self.ax = self.fig.add_subplot(111)
 
     def show_fig(self):
+
         plt.show()
